@@ -1,0 +1,54 @@
+#headerTitle {
+	color: grey;
+	font-family: Century Gothic;
+	font-size: 75px;
+	
+}
+
+#subTitle {
+	color: grey;
+	font-family: Century Gothic;
+	font-size: 15px;
+	
+}
+	
+.topnav {
+	background-color: black;
+	overflow: hidden;
+	font-family: Century Gothic;
+	position: relative;
+
+}
+
+.topnav a {
+	float: left;
+	color: blue;
+	text-align: center;
+	padding: 20px 16px;
+	font-size: 30px;
+	position: relative;
+	
+	
+}
+
+.topnav a:hover {
+	background-color: grey;
+	color: grey;
+	
+}
+
+.topnav a.active {
+	background-color: black;
+	color: white;
+	
+}
+
+#button1 {
+	color: white;
+	font-family: Century Gothic;
+	background-color: Grey;
+	font-size: 25px;
+	position: relative;
+	left: 550px;
+	bottom: -250px;
+}	
