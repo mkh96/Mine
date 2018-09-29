@@ -4,6 +4,12 @@
 
 
 <header>
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.
+css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin
+="anonymous">
+	
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126629069-1"></script>
 <script>
@@ -19,14 +25,65 @@
 </header>
 
 <body>
-	
+	<div id="sign-in-container"></div>
 	<h1 id="headerTitle">A Random Collection Of Dumb Shit</h1>
 
 	<div class="topnav">
 	<a class="active" href="virtualpantspooper.html">Virtual Pants Pooper</a>
 	<a class="active" href="kittypetter.html">Kitty Petter</a>
-</div>
+	</div>
 
+<!-- This is for authentication -->
+<script type="text/javascript">
+  var oktaSignIn = new OktaSignIn({
+    baseUrl: "{{ https://t0796.herokuapp.com }}",
+    clientId: "{{ 0oagf45zxaFF5si3G0h7 }}",
+    authParams: {
+      issuer: "{{ https://t0796.herokuapp.com }}/oauth2/default",
+      responseType: ["token", "id_token"],
+      display: "page"
+    }
+  });
+
+  if (oktaSignIn.token.hasTokensInUrl()) {
+    oktaSignIn.token.parseTokensFromUrl(
+      // If we get here, the user just logged in.
+      function success(res) {
+        var accessToken = res[0];
+        var idToken = res[1]
+
+        oktaSignIn.tokenManager.add("accessToken", accessToken);
+        oktaSignIn.tokenManager.add("idToken", idToken);
+
+        window.location.hash = "";
+        document.getElementById("messageBox").innerHTML = "Hello, " + idToken.claims.email + "! You just logged in! :)";
+      },
+      function error(err) {
+        console.error(err);
+      }
+    );
+  } else {
+    oktaSignIn.session.get(function (res) {
+      // If we get here, the user is already signed in.
+      if (res.status === 'ACTIVE') {
+        document.getElementById("messageBox").innerHTML = "Hello, " + res.login + "! You are *still* logged in! :)";
+        return;
+      }
+
+      // If we get here, the user is not logged in, so we should show the sign-in form.
+      oktaSignIn.renderEl(
+        { el: '#sign-in-container' },
+        function success(res) {},
+        function error(err) {
+          console.error(err);
+        }
+      );
+    });
+  }
+</script>
+<!-- End of Authentication-->
+	
+</body>
 
 
 </html>
